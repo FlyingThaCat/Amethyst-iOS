@@ -110,7 +110,7 @@ jobs:
             gmake -j$(sysctl -n hw.ncpu) dsym package PLATFORM=${{ matrix.platform }}
           fi
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@main
         with:
           name: amethyst-artifacts
           path: artifacts/
