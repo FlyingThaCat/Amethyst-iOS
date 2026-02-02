@@ -152,16 +152,17 @@ METHOD_PACKAGE = \
 # Function to download and unpack Java runtimes.
 METHOD_JAVA_UNPACK = \
 	cd $(SOURCEDIR)/depends; \
-	# If the extracted JRE does not exist, download + unpack \
+	mkdir -p java-$(1)-openjdk; \
 	if [ ! -f "java-$(1)-openjdk/release" ]; then \
-		# Always download the ZIP \
-		wget '$(2)' -q --show-progress; \
-		# Extract ZIP (contains both tar.xz + iOS files) \
-		unzip jre*-ios-aarch64.zip && rm jre*-ios-aarch64.zip; \
-		# Ensure target folder exists \
-		mkdir -p java-$(1)-openjdk; \
-		# Extract tar.xz into java-XX-openjdk \
-		tar xvf jre$(1)-*.tar.xz -C java-$(1)-openjdk; \
+		echo "[Amethyst] Downloading JRE $(1)..."; \
+		wget -q --show-progress '$(2)'; \
+		UNZIP_FILE=$$(ls jre*-ios-aarch64.zip | head -n1); \
+		if [ -z "$$UNZIP_FILE" ]; then echo "ERROR: JRE zip not found"; exit 1; fi; \
+		unzip -o "$$UNZIP_FILE"; \
+		rm -f "$$UNZIP_FILE"; \
+		TAR_FILE=$$(ls jre$(1)-*.tar.xz | head -n1); \
+		if [ -z "$$TAR_FILE" ]; then echo "ERROR: JRE tar.xz not found"; exit 1; fi; \
+		tar xvfJ "$$TAR_FILE" -C java-$(1)-openjdk; \
 	fi
 
 # Function to codesign binaries.
