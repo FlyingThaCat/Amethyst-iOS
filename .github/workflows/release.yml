@@ -55,7 +55,7 @@ jobs:
         run: |
           brew install gpatch
           brew install make
-          brew install --cask zulu@21
+          brew install --cask zulu@8
           export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
           brew install ldid
 
