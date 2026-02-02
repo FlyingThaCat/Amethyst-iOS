@@ -1,3 +1,7 @@
+#include <mach/mach.h>
+#include <mach/task.h>
+#include <mach/exception_types.h>
+
 #include <dirent.h>
 #include <dlfcn.h>
 #include <errno.h>
