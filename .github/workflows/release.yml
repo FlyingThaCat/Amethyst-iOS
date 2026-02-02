@@ -51,6 +51,14 @@ jobs:
           repository: 'PojavLauncherTeam/gl4es-114-extra'
           path: 'gl4es'
 
+      - name: Install dependencies
+        run: |
+          brew install gpatch
+          brew install make
+          brew install --cask zulu@21
+          export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+          brew install ldid
+
       - name: Build gl4es
         if: false && steps.gl4es-cache.outputs.cache-hit != 'true'
         continue-on-error: true
